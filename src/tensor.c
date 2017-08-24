@@ -7,24 +7,7 @@
  * files  for Markovman. It should be in the main directory, in a file named *
  * 'LICENSE'.                                                                *
  *****************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
 
- /*!
- * \mainpage
- *
- * \brief Tensor-based deep-learning library written in C and amd64 assembly
- *
- * \see https://github.com/IanTayler/tenc.git
- */
-
- /**
-  * \file tenc.c
-  * \author Ian G. Tayler
-  *
-  * \brief The main file, where the main cli interface is implemented.
-  *
-  * \see https://github.com/IanTayler/tenc.git
-  */
-int main(int argc, char *argv[])
-{
-    return 0;
-}
+#include "tensor.h"

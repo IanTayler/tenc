@@ -14,7 +14,10 @@ SOURCES=$(LIBR)/*.c
 .PHONY: doc
 
 doc:
-	cldoc generate $(CFLAGS) -- --output doc --report
+	doxygen
+
+servedoc: doc
+	cd doc/html; python3 -m http.server 8000
 
 $(PROGRAM): $(SOURCES)
 	$(CC) $(CFLAGS) $(SOURCES) -o $(PROGRAM) -I$(INCLUDE) -L$(LIBR)
