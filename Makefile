@@ -9,10 +9,12 @@ PREF=src
 INCLUDE=$(PREF)/include
 LIBR=$(PREF)/lib
 
-SOURCES=$(LIBR)/*.c
+SOURCES=$(PREF)/*.c
 
-.PHONY: doc
+.PHONY: doc servedoc install uninstall all
 
+all: $(PROGRAM) doc
+	@echo "Finished making $(PROGRAM)"
 doc:
 	doxygen
 
