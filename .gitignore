@@ -1,4 +1,7 @@
+.gcc-flags.json
 tenc
 doc
 */*.gch
 */*/*.gch
+*/*.o
+*/*/*.o

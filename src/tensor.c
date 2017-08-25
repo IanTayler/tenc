@@ -11,3 +11,38 @@
 #include <stdlib.h>
 
 #include "tensor.h"
+
+/***********************************************
+*                     SHAPE                    *
+***********************************************/
+Shape *new_shape(int length, int_shape_t *shape_arr)
+{
+    Shape *ptr = malloc(sizeof(Shape));
+    ptr->shape_len = length;
+    ptr->shape = shape_arr;
+    return ptr;
+}
+
+void free_shape(Shape *ptr)
+{
+    free(ptr->shape);
+    free(ptr);
+}
+
+/***********************************************
+*                    TENSOR                    *
+***********************************************/
+Tensor *new_tensor(Shape *shape, float *value_array)
+{
+    Tensor *ptr = malloc(sizeof(Tensor));
+    ptr->shape = shape;
+    ptr->value_array = value_array;
+    return ptr;
+}
+
+void free_tensor(Tensor *ptr)
+{
+    free_shape(ptr->shape);
+    free(ptr->value_array);
+    free(ptr);
+}
