@@ -20,7 +20,7 @@
   * \file tenc.c
   * \author Ian G. Tayler
   *
-  * \brief The main file, where the main cli interface is implemented.
+  * \brief The main file, where the main cli is implemented.
   *
   * \see https://github.com/IanTayler/tenc.git
   */
