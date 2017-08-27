@@ -28,8 +28,6 @@
 
 #include "tensor.h"
 
-#define LEN 3
-
 
 int main(int argc, char *argv[])
 {
