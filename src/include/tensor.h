@@ -58,6 +58,12 @@ int_shape_t tc_shape_size(Shape *shape);
  *
  * A Tensor is simply represented as an array of floats, with functions capable
  * of accessing the right value by index, etc.
+ *
+ * Things to note include:
+ *     - These Tensors are statically shaped (i.e. shape is known at
+ *       compile-time)
+ *     - They hold floats exclusively. Be careful with floating point rounding
+ *       error! This library won't hold your hand with respect to that.
  */
 typedef struct {
     Shape *shape; /**<Tensor's size in each dimension.*/
