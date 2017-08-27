@@ -87,8 +87,73 @@ Tensor *tc_new_tensor(Shape *shape, float *value_array);
  */
 void tc_free_tensor(Tensor *ptr);
 
+/**
+ * \brief Create a Tensor and initialize all elements to a certain value.
+ *
+ * \param shape Shape of the returned Tensor.
+ * \param value Float that will be used to initialize all elements in the
+ * Tensor.
+ *
+ * \return Pointer to a Tensor.
+ *
+ * \note You should later free the Tensor with free_tensor.
+ *
+ * \see tc_zeros tc_zeros_like tc_ones tc_ones_like
+ */
 Tensor *tc_fill(Shape *shape, float value);
 
+/**
+ * \brief Create a Tensor and initialize it to all zeros.
+ *
+ * \param shape Shape of the returned Tensor.
+ *
+ * \return Pointer to a Tensor.
+ *
+ * \note You should later free the Tensor with free_tensor.
+ *
+ * \see tc_fill tc_zeros_like tc_ones tc_ones_like
+ */
 Tensor *tc_zeros(Shape *shape);
+
+/**
+ * \brief Create a Tensor and initialize it to all zeros, copying the shape
+ * from another Tensor.
+ *
+ * \param t Tensor from which to copy the shape.
+ *
+ * \return Pointer to a Tensor.
+ *
+ * \note You should later free the Tensor with free_tensor.
+ *
+ * \see tc_fill tc_zeros tc_ones tc_ones_like
+ */
+Tensor *tc_zeros_like(Tensor *t);
+
+/**
+ * \brief Create a Tensor and initialize it to all ones.
+ *
+ * \param shape Shape of the returned Tensor.
+ *
+ * \return Pointer to a Tensor.
+ *
+ * \note You should later free the Tensor with free_tensor.
+ *
+ * \see tc_fill tc_zeros tc_zeros_like tc_ones_like
+ */
+Tensor *tc_ones(Shape *shape);
+
+/**
+ * \brief Create a Tensor and initialize it to all ones, copying the shape
+ * from another Tensor.
+ *
+ * \param t Tensor from which to copy the shape.
+ *
+ * \return Pointer to a Tensor.
+ *
+ * \note You should later free the Tensor with free_tensor.
+ *
+ * \see tc_fill tc_zeros tc_zeros_like tc_ones
+ */
+Tensor *tc_ones_like(Tensor *t);
 
 #endif
