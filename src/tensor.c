@@ -68,6 +68,11 @@ Tensor *tc_zeros(Shape *shape)
     return tc_new_tensor(shape, value_arr);
 }
 
+Tensor *tc_zeros_like(Tensor *t)
+{
+    return tc_zeros(t->shape);
+}
+
 Tensor *tc_fill(Shape *shape, float value)
 {
     int_shape_t size = tc_shape_size(shape);
@@ -77,4 +82,15 @@ Tensor *tc_fill(Shape *shape, float value)
     for (int i = 0; i < size; i++)
         value_arr[i] = value;
     return tc_new_tensor(shape, value_arr);
+}
+
+Tensor *tc_ones(Shape *shape)
+{
+    /* TODO: search for a faster way */
+    return tc_fill(shape, 1.0f);
+}
+
+Tensor *tc_ones_like(Tensor *t)
+{
+    return tc_ones(t->shape);
 }
