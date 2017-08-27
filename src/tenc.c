@@ -16,14 +16,21 @@
  * \see https://github.com/IanTayler/tenc.git
  */
 
- /**
-  * \file tenc.c
-  * \author Ian G. Tayler
-  *
-  * \brief The main file, where the main cli is implemented.
-  *
-  * \see https://github.com/IanTayler/tenc.git
-  */
+/**
+* \file tenc.c
+* \author Ian G. Tayler
+*
+* \brief The main file, where the main cli is implemented.
+*
+* \see https://github.com/IanTayler/tenc.git
+*/
+#include <stdio.h>
+
+#include "tensor.h"
+
+#define LEN 3
+
+
 int main(int argc, char *argv[])
 {
     return 0;

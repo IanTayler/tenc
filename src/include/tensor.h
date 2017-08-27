@@ -9,6 +9,7 @@
  *****************************************************************************/
  #ifndef TENSOR_H
  #define TENSOR_H
+ #include <stdint.h>
  /**
  * \file include/tensor.h
  * \author Ian G. Tayler
@@ -18,7 +19,7 @@
 /**
  * \brief Integer type for dimension sizes in shapes.
  */
-typedef long int int_shape_t;
+typedef int64_t int_shape_t;
 /**
  * \brief Type for Tensor shapes.
  */
@@ -35,14 +36,23 @@ typedef struct {
  *
  * \return A pointer to a Shape. Should later be deallocated with free_shape.
  */
-Shape *new_shape(int length, int_shape_t *shape_arr);
+Shape *tc_new_shape(int length, int_shape_t *shape_arr);
 
 /**
  * \brief Deallocates a Shape.
  *
  * \param ptr Pointer to a Shape.
  */
-void free_shape(Shape *ptr);
+void tc_free_shape(Shape *ptr);
+/**
+ * \brief Gets the amount of values in a Tensor of a specific Shape.
+ *
+ * \param ptr Shape.
+ *
+ * \return int_shape_t holding the number of values in a Tensor that has the
+ * input shape.
+ */
+int_shape_t tc_shape_size(Shape *shape);
 /**
  * \brief Type for a float tensor.
  *
@@ -62,13 +72,17 @@ typedef struct {
  *
  * \return Pointer to a Tensor. Should be deallocated with free_tensor.
  */
-Tensor *new_tensor(Shape *shape, float *value_array);
+Tensor *tc_new_tensor(Shape *shape, float *value_array);
 
 /**
  * \brief Deallocates a Tensor.
  *
  * \param ptr Pointer to a Tensor.
  */
-void free_tensor(Tensor *ptr);
+void tc_free_tensor(Tensor *ptr);
+
+Tensor *tc_fill(Shape *shape, float value);
+
+Tensor *tc_zeros(Shape *shape);
 
 #endif
