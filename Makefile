@@ -15,7 +15,7 @@ INCLUDES=$(INCLUDE)/*.h
 
 .PHONY: doc servedoc install uninstall all test
 
-all: $(PROGRAM) doc
+all: $(PROGRAM)
 	@echo "Finished making $(PROGRAM)"
 doc:
 	doxygen
