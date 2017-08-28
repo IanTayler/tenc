@@ -1,6 +1,7 @@
 .gcc-flags.json
 tenc
 doc
+tests
 */*.gch
 */*/*.gch
 */*.o

@@ -9,10 +9,11 @@ PREF=src
 INCLUDE=$(PREF)/include
 LIBR=$(PREF)/lib
 
-SOURCES=$(PREF)/*.c
+LIBSOURCES=$(LIBR)/*.c
+SOURCES=$(PREF)/*.c $(LIBSOURCES)
 INCLUDES=$(INCLUDE)/*.h
 
-.PHONY: doc servedoc install uninstall all
+.PHONY: doc servedoc install uninstall all test
 
 all: $(PROGRAM) doc
 	@echo "Finished making $(PROGRAM)"
@@ -30,3 +31,13 @@ install: $(PROGRAM)
 
 uninstall:
 	rm /usr/bin/$(PROGRAM)
+
+TESTSOURCES=test/*.c
+TESTINCLUDE=test/include/
+TESTINCLUDES=test/include/*.h
+tests: $(TESTSOURCES) $(LIBSOURCES) $(INCLUDES) $(TESTINCLUDES)
+	$(CC) $(CFLAGS) $(LIBSOURCES) $(TESTSOURCES) -o tests -I$(TESTINCLUDE) \
+	-I$(INCLUDE)
+	./tests
+
+test: tests
