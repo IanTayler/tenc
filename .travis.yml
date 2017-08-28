@@ -1,0 +1,6 @@
+install: make CC=$CC
+language: c
+script: make CC=$CC test
+compiler:
+  - clang
+  - gcc
