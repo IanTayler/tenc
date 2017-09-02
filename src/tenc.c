@@ -8,13 +8,13 @@
  * 'LICENSE'.                                                                *
  *****************************************************************************/
 
- /*!
- * \mainpage
- *
- * \brief Tensor-based deep-learning library written in C and amd64 assembly
- *
- * \see https://github.com/IanTayler/tenc.git
- */
+/*!
+* \mainpage
+*
+* \brief Tensor-based deep-learning library written in C and amd64 assembly
+*
+* \see https://github.com/IanTayler/tenc.git
+*/
 
 /**
 * \file tenc.c
