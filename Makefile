@@ -1,7 +1,7 @@
 ifndef $(CC)
 	CC=gcc
 endif
-CFLAGS=-O3 -Wall -std=c99 -pedantic -g -fopenmp
+CFLAGS=-O3 -Wall -pedantic -g -fopenmp
 PROGRAM=tenc
 
 PREF=src
