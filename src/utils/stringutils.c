@@ -27,9 +27,9 @@ uint32_t next_power(uint32_t n)
     return 1 << log_2_len;
 }
 
-void zero_end(DynStr *s)
+void zero_end(DynStr *ds)
 {
-    s->s[s->curr] = '\0';
+    ds->s[ds->curr] = '\0';
 }
 
 DynStr *str_alloc_at_least(uint32_t at_least)
@@ -44,33 +44,39 @@ DynStr *str_alloc_at_least(uint32_t at_least)
     return str;
 }
 
-/* Convenience function. Only used internally */
-void str_append_char_no_zero(DynStr *s, char c)
+void free_dynstr(DynStr *ds)
 {
-    if (s->curr >=  s->len) {
+    free(ds->s);
+    free(ds);
+}
+
+/* Convenience function. Only used internally */
+void str_append_char_no_zero(DynStr *ds, char c)
+{
+    if (ds->curr >=  ds->len) {
         /* We reallocate to the next_power of s->curr + 1. The '++' isn't
         actually necessary in the current implementation of next_power but it
         would be in other implementations which are recommended hacks to the
         code (e.g. next_power as the identity function) */
-        s->s = realloc(s->s, sizeof(*(s->s)) * next_power(s->curr++));
+        ds->s = realloc(ds->s, sizeof(*(ds->s)) * next_power(ds->curr++));
     }
-    s->s[s->curr] = c;
-    s->curr++;
+    ds->s[ds->curr] = c;
+    ds->curr++;
 }
 
-void str_append_char(DynStr *s, char c)
+void str_append_char(DynStr *ds, char c)
 {
-    str_append_char_no_zero(s, c);
-    zero_end(s);
+    str_append_char_no_zero(ds, c);
+    zero_end(ds);
 }
 
-void str_append_str(DynStr *s, char *str)
+void str_append_str(DynStr *ds, char *str)
 {
 #pragma omp parallel for
     for(int i = 0; str[i] != '\0'; i++) {
-        str_append_char_no_zero(s, str[i]);
+        str_append_char_no_zero(ds, str[i]);
     }
-    zero_end(s);
+    zero_end(ds);
 }
 
 void str_append_dynstr(DynStr *str1, DynStr *str2)
