@@ -9,10 +9,12 @@ LIBRARY=libtenc.so
 PREF=src
 
 INCLUDE=$(PREF)/include
+UTILSINCLUDE=$(PREF)/utils/include
 LIBR=$(PREF)/lib
 
 LIBSOURCES=$(LIBR)/*.c
-SOURCES=$(PREF)/*.c $(LIBSOURCES)
+UTILSSOURCES=$(PREF)/utils/*.c
+SOURCES=$(PREF)/*.c $(LIBSOURCES) $(UTILSSOURCES)
 INCLUDES=$(INCLUDE)/*.h
 
 .PHONY: doc servedoc install uninstall all test
@@ -25,11 +27,11 @@ servedoc: doc
 	cd doc/html; python3 -m http.server 8000
 
 $(PROGRAM): $(SOURCES) $(INCLUDES) Makefile
-	$(CC) $(CFLAGS) $(SOURCES) -o $(PROGRAM) -I$(INCLUDE)
+	$(CC) $(CFLAGS) $(SOURCES) -o $(PROGRAM) -I$(INCLUDE) -I$(UTILSINCLUDE)
 	@echo "Finished making $(PROGRAM)"
 
 $(LIBRARY): $(SOURCES) $(INCLUDES) Makefile
-	$(CC) $(LIBCFLAGS) $(SOURCES) -o $(LIBRARY) -I$(INCLUDE)
+	$(CC) $(LIBCFLAGS) $(SOURCES) -o $(LIBRARY) -I$(INCLUDE) -I$(UTILSINCLUDE)
 	@echo "Finished making $(LIBRARY)"
 
 install: $(PROGRAM)
@@ -43,8 +45,8 @@ TESTSOURCES=test/*.c
 TESTINCLUDE=test/include/
 TESTINCLUDES=test/include/*.h
 tests: $(TESTSOURCES) $(LIBSOURCES) $(INCLUDES) $(TESTINCLUDES) Makefile
-	$(CC) $(CFLAGS) $(LIBSOURCES) $(TESTSOURCES) -o tests -I$(TESTINCLUDE) \
-	-I$(INCLUDE)
+	$(CC) $(CFLAGS) $(LIBSOURCES) $(UTILSSOURCES) $(TESTSOURCES) -o tests -I$(TESTINCLUDE) \
+	-I$(INCLUDE) -I$(UTILSINCLUDE)
 	./tests
 
 test: tests

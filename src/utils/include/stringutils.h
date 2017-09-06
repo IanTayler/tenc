@@ -49,7 +49,8 @@ DynStr *str_alloc_at_least(uint32_t at_least);
 void free_dynstr(DynStr *ds);
 
 /**
-* \brief Appends a single char to a DynStr.
+* \brief Appends a single char to a DynStr. At the end, ds->s is a valid, zero
+* terminated string.
 *
 * \param ds Pointer to a DynStr.
 * \param c Char to append.
@@ -59,12 +60,37 @@ void free_dynstr(DynStr *ds);
 void str_append_char(DynStr *ds, char c);
 
 /**
+* \brief Appends a single char to a DynStr, without adding a zero to the end.
+*
+* It's used internally for (probably very small) performance gains in certain
+* functions.
+*
+* \param ds Pointer to a DynStr.
+* \param c Char to append.
+*
+* \see str_append_char
+*/
+void str_append_char_no_zero(DynStr *ds, char c);
+
+/**
+* \brief Adds a 0 to the end of a DynStr.
+*
+* Should only be used internally, as it isn't realloc-safe like
+* str_append_char.
+*
+* \param ds DynStr.
+* \param c char
+*/
+void zero_end(DynStr *ds);
+
+/**
 * \brief Convenience function to append a char array to a DynStr.
 *
 * \param ds Pointer to Dynstr.
 * \param str char[].
+* \param len Length of str.
 */
-void str_append_str(DynStr *ds, char *str);
+void str_append_str(DynStr *ds, char *str, int len);
 
 /**
 * \brief Convenience function to append two DynStrs.
