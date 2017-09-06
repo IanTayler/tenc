@@ -50,7 +50,7 @@ void free_dynstr(DynStr *ds)
     free(ds);
 }
 
-/* Convenience function. Only used internally */
+/* Convenience function. Should only be used internally */
 void str_append_char_no_zero(DynStr *ds, char c)
 {
     if (ds->curr >=  ds->len) {
@@ -70,10 +70,10 @@ void str_append_char(DynStr *ds, char c)
     zero_end(ds);
 }
 
-void str_append_str(DynStr *ds, char *str)
+void str_append_str(DynStr *ds, char *str, int len)
 {
 #pragma omp parallel for
-    for(int i = 0; str[i] != '\0'; i++) {
+    for(int i = 0; i < len; i++) {
         str_append_char_no_zero(ds, str[i]);
     }
     zero_end(ds);
@@ -81,5 +81,5 @@ void str_append_str(DynStr *ds, char *str)
 
 void str_append_dynstr(DynStr *str1, DynStr *str2)
 {
-    str_append_str(str1, str2->s);
+    str_append_str(str1, str2->s, str2->len);
 }
