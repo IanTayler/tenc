@@ -1,8 +1,10 @@
 ifndef $(CC)
 	CC=gcc
 endif
-CFLAGS=-O3 -Wall -pedantic -g -fopenmp
+CFLAGS=-O3 -Wall -pedantic -g -fopenmp -std=gnu99
+LIBCFLAGS=$(CFLAGS) -shared -fPIC
 PROGRAM=tenc
+LIBRARY=libtenc.so
 
 PREF=src
 
@@ -15,19 +17,24 @@ INCLUDES=$(INCLUDE)/*.h
 
 .PHONY: doc servedoc install uninstall all test
 
-all: $(PROGRAM)
-	@echo "Finished making $(PROGRAM)"
+all: $(PROGRAM) $(LIBRARY)
 doc:
 	doxygen
 
 servedoc: doc
 	cd doc/html; python3 -m http.server 8000
 
-$(PROGRAM): $(SOURCES) $(INCLUDES)
-	$(CC) $(CFLAGS) $(SOURCES) -o $(PROGRAM) -I$(INCLUDE) -L$(LIBR)
+$(PROGRAM): $(SOURCES) $(INCLUDES) Makefile
+	$(CC) $(CFLAGS) $(SOURCES) -o $(PROGRAM) -I$(INCLUDE)
+	@echo "Finished making $(PROGRAM)"
+
+$(LIBRARY): $(SOURCES) $(INCLUDES) Makefile
+	$(CC) $(LIBCFLAGS) $(SOURCES) -o $(LIBRARY) -I$(INCLUDE)
+	@echo "Finished making $(LIBRARY)"
 
 install: $(PROGRAM)
-	cp $(PROGRAM) /usr/bin/
+	cp $(PROGRAM) /usr/local/bin/
+	cp $(LIBRARY) /usr/local/lib/
 
 uninstall:
 	rm /usr/bin/$(PROGRAM)
@@ -35,7 +42,7 @@ uninstall:
 TESTSOURCES=test/*.c
 TESTINCLUDE=test/include/
 TESTINCLUDES=test/include/*.h
-tests: $(TESTSOURCES) $(LIBSOURCES) $(INCLUDES) $(TESTINCLUDES)
+tests: $(TESTSOURCES) $(LIBSOURCES) $(INCLUDES) $(TESTINCLUDES) Makefile
 	$(CC) $(CFLAGS) $(LIBSOURCES) $(TESTSOURCES) -o tests -I$(TESTINCLUDE) \
 	-I$(INCLUDE)
 	./tests

@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <omp.h>
+
 #include "stringutils.h"
 
 uint32_t next_power(uint32_t n)
@@ -64,6 +66,7 @@ void str_append_char(DynStr *s, char c)
 
 void str_append_str(DynStr *s, char *str)
 {
+#pragma omp parallel for
     for(int i = 0; str[i] != '\0'; i++) {
         str_append_char_no_zero(s, str[i]);
     }
