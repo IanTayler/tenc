@@ -36,27 +36,35 @@ typedef struct {
 *
 * \param uint32_t at_least Minimum number of chars to allocate.
 *
-* \return A pointer to a DynStr which evaluates to the empty string.
+* \return A pointer to a DynStr which evaluates to the empty string. Should
+* later be deallocated with free_dynstr.
 */
 DynStr *str_alloc_at_least(uint32_t at_least);
 
 /**
+* \brief Deallocate a DynStr.
+*
+* \param ds Pointer to DynStr.
+*/
+void free_dynstr(DynStr *ds);
+
+/**
 * \brief Appends a single char to a DynStr.
 *
-* \param s Pointer to a DynStr.
+* \param ds Pointer to a DynStr.
 * \param c Char to append.
 *
 * \see str_alloc_at_least
 */
-void str_append_char(DynStr *s, char c);
+void str_append_char(DynStr *ds, char c);
 
 /**
 * \brief Convenience function to append a char array to a DynStr.
 *
-* \param s Pointer to Dynstr.
+* \param ds Pointer to Dynstr.
 * \param str char[].
 */
-void str_append_str(DynStr *s, char *str);
+void str_append_str(DynStr *ds, char *str);
 
 /**
 * \brief Convenience function to append two DynStrs.
