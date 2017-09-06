@@ -7,6 +7,11 @@
  * files  for Markovman. It should be in the main directory, in a file named *
  * 'LICENSE'.                                                                *
  *****************************************************************************/
+/**
+* \file utils/include/stringutils.h
+* \author Ian G. Tayler
+* \brief Define utils for strings and the DynStr type.
+*/
 #ifndef STRINGUTILS_H
 #define STRINGUTILS_H
 

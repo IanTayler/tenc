@@ -7,15 +7,15 @@
  * files  for Markovman. It should be in the main directory, in a file named *
  * 'LICENSE'.                                                                *
  *****************************************************************************/
- #ifndef TENSOR_H
- #define TENSOR_H
- #include <stdint.h>
- /**
- * \file include/tensor.h
- * \author Ian G. Tayler
- *
- * \brief Defines Tensor type and basic handlers and initializers.
- */
+#ifndef TENSOR_H
+#define TENSOR_H
+#include <stdint.h>
+/**
+* \file include/tensor.h
+* \author Ian G. Tayler
+*
+* \brief Defines Tensor type and basic handlers and initializers.
+*/
 /**
  * \brief Integer type for dimension sizes in shapes.
  */
