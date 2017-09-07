@@ -118,6 +118,15 @@ char *tc_btfy(Tensor *t)
 }
 
 
+char *tc_btfy_shape(Shape *shape)
+{
+    Tensor *shape_tensor = tc_shape_to_tensor(shape);
+    char *str = tc_btfy(shape_tensor);
+    tc_free_tensor(shape_tensor);
+    return str;
+}
+
+
 char *tc_long_btfy(Tensor *t)
 {
     fprintf(stderr, "ERROR: tc_long_btfy not implemented.");
@@ -128,6 +137,14 @@ char *tc_long_btfy(Tensor *t)
 void tc_pprint(Tensor *t)
 {
     char *str = tc_btfy(t);
+    printf("%s\n", str);
+    free(str);
+}
+
+
+void tc_pprint_shape(Shape *shape)
+{
+    char *str = tc_btfy_shape(shape);
     printf("%s\n", str);
     free(str);
 }
