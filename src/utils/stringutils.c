@@ -53,12 +53,13 @@ void free_dynstr(DynStr *ds)
 /* Convenience function. Should only be used internally */
 void str_append_char_no_zero(DynStr *ds, char c)
 {
-    if (ds->curr >=  ds->len) {
+    if (ds->curr >=  ds->len - 1) {
         /* We reallocate to the next_power of s->curr + 1. The '++' isn't
         actually necessary in the current implementation of next_power but it
         would be in other implementations which are recommended hacks to the
         code (e.g. next_power as the identity function) */
-        ds->s = realloc(ds->s, sizeof(*(ds->s)) * next_power(ds->curr++));
+        ds->len =  next_power((ds->curr) + 1);
+        ds->s = realloc(ds->s, sizeof(*(ds->s)) * ds->len);
     }
     ds->s[ds->curr] = c;
     ds->curr++;
@@ -70,10 +71,9 @@ void str_append_char(DynStr *ds, char c)
     zero_end(ds);
 }
 
-void str_append_str(DynStr *ds, char *str, int len)
+void str_append_str(DynStr *ds, char *str)
 {
-#pragma omp parallel for
-    for(int i = 0; i < len; i++) {
+    for(int i = 0; str[i] != '\0'; i++) {
         str_append_char_no_zero(ds, str[i]);
     }
     zero_end(ds);
@@ -81,5 +81,5 @@ void str_append_str(DynStr *ds, char *str, int len)
 
 void str_append_dynstr(DynStr *str1, DynStr *str2)
 {
-    str_append_str(str1, str2->s, str2->len);
+    str_append_str(str1, str2->s);
 }
