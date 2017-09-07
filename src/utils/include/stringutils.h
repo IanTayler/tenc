@@ -88,9 +88,8 @@ void zero_end(DynStr *ds);
 *
 * \param ds Pointer to Dynstr.
 * \param str char[].
-* \param len Length of str.
 */
-void str_append_str(DynStr *ds, char *str, int len);
+void str_append_str(DynStr *ds, char *str);
 
 /**
 * \brief Convenience function to append two DynStrs.
