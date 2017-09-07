@@ -52,6 +52,19 @@ Tensor *tc_new_tensor(Shape *shape, float *value_array)
     return ptr;
 }
 
+Tensor *tc_shape_to_tensor(Shape *shape)
+{
+    int_shape_t *shape_shape_arr = malloc(sizeof(*shape_shape_arr));
+    shape_shape_arr[0] = shape->shape_len;
+    Shape *shape_shape = tc_new_shape(1, shape_shape_arr);
+    float *value_array = malloc(sizeof(float) * shape->shape_len);
+    for (int i =0; i < shape->shape_len; i++) {
+        value_array[i] = (float)shape->shape[i];
+    }
+    Tensor *ptr = tc_new_tensor(shape_shape, value_array);
+    return ptr;
+}
+
 void tc_free_tensor(Tensor *ptr)
 {
     tc_free_shape(ptr->shape);

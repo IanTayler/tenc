@@ -81,6 +81,15 @@ typedef struct {
 Tensor *tc_new_tensor(Shape *shape, float *value_array);
 
 /**
+* \brief Get a Tensor representing a shape.
+*
+* \param shape Shape
+*
+* \return Tensor
+*/
+Tensor *tc_shape_to_tensor(Shape *shape);
+
+/**
  * \brief Deallocates a Tensor.
  *
  * \param ptr Pointer to a Tensor.
