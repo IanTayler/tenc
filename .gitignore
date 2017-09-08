@@ -2,13 +2,6 @@
 tenc
 doc
 tests
-*.ghc
-*/*.gch
-*/*/*.gch
-*/*/*/*.gch
-*/*/*/*/*.gch
-*/*.o
-*/*/*.o
-*/*/*/*.o
-*/*/*/*/*.o
+*.gch
+*.o
 libtenc.so
