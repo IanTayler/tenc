@@ -9,6 +9,7 @@
  *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include <omp.h>
 
@@ -20,25 +21,50 @@
 Shape *tc_new_shape(int length, int_shape_t *shape_arr)
 {
     Shape *ptr = malloc(sizeof(*ptr));
-    ptr->shape_len = length;
-    ptr->shape = shape_arr;
+    ptr->len = length;
+    ptr->arr = shape_arr;
     return ptr;
+}
+
+Shape *tc_copy_shape(Shape *shape)
+{
+    int_shape_t *copy_arr = malloc(sizeof(*copy_arr) * shape->len);
+#pragma omp parallel for
+    for (int i = 0; i < shape->len; i++) {
+        copy_arr[i] = shape->arr[i];
+    }
+    Shape *copy = tc_new_shape(shape->len, copy_arr);
+    return copy;
 }
 
 void tc_free_shape(Shape *ptr)
 {
-    free(ptr->shape);
+    free(ptr->arr);
     free(ptr);
 }
 
 int_shape_t tc_shape_size(Shape *shape)
 {
     int_shape_t retval = 1;
-    int len = shape->shape_len;
+    int len = shape->len;
     for (int i = 0; i < len; i++) {
-        retval *= shape->shape[i];
+        retval *= shape->arr[i];
     }
     return retval;
+}
+
+bool tc_shape_equal(Shape *s1, Shape *s2)
+{
+    if (s1->len != s2->len) {
+        return false;
+    }
+    for (int i = 0; i < s1->len; i++) {
+        if (s1->arr[i] != s2->arr[i]) {
+            return false;
+        }
+    }
+    /* If we've gotten here, the shapes are equal */
+    return true;
 }
 
 /***********************************************
@@ -52,14 +78,27 @@ Tensor *tc_new_tensor(Shape *shape, float *value_array)
     return ptr;
 }
 
+Tensor *tc_copy_tensor(Tensor *t)
+{
+    Shape *copy_shape = tc_copy_shape(t->shape);
+    int_shape_t shape_size = tc_shape_size(copy_shape);
+    float *copy_arr = malloc(sizeof(*copy_arr) * shape_size);
+#pragma omp parallel for
+    for (int i = 0; i < shape_size; i++) {
+        copy_arr[i] = t->value_array[i];
+    }
+    Tensor *copy = tc_new_tensor(copy_shape, copy_arr);
+    return copy;
+}
+
 Tensor *tc_shape_to_tensor(Shape *shape)
 {
     int_shape_t *shape_shape_arr = malloc(sizeof(*shape_shape_arr));
-    shape_shape_arr[0] = shape->shape_len;
+    shape_shape_arr[0] = shape->len;
     Shape *shape_shape = tc_new_shape(1, shape_shape_arr);
-    float *value_array = malloc(sizeof(float) * shape->shape_len);
-    for (int i =0; i < shape->shape_len; i++) {
-        value_array[i] = (float)shape->shape[i];
+    float *value_array = malloc(sizeof(float) * shape->len);
+    for (int i =0; i < shape->len; i++) {
+        value_array[i] = (float)shape->arr[i];
     }
     Tensor *ptr = tc_new_tensor(shape_shape, value_array);
     return ptr;
