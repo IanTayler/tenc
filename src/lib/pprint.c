@@ -64,8 +64,8 @@ void write_element(DynStr *ds, Tensor *t, int *elempos)
 char *tc_btfy(Tensor *t)
 {
     DynStr *ds = str_alloc_at_least(BASE_LEN);
-    int_shape_t *shp = t->shape->shape;
-    int shplen = t->shape->shape_len;
+    int_shape_t *shp = t->shape->arr;
+    int shplen = t->shape->len;
     /* Get a temporary copy of the shape array which will be modified in the
     process */
     int_shape_t *tmpshp = malloc(sizeof(*tmpshp) * shplen);

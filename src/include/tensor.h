@@ -9,7 +9,9 @@
  *****************************************************************************/
 #ifndef TENSOR_H
 #define TENSOR_H
+
 #include <stdint.h>
+#include <stdbool.h>
 /**
 * \file include/tensor.h
 * \author Ian G. Tayler
@@ -24,8 +26,8 @@ typedef int64_t int_shape_t;
  * \brief Type for Tensor shapes.
  */
 typedef struct {
-    int shape_len; /**<Number of dimensions in the shape.*/
-    int_shape_t *shape; /**<Array holding the size of each dimension.*/
+    int len; /**<Number of dimensions in the shape.*/
+    int_shape_t *arr; /**<Array holding the size of each dimension.*/
 } Shape;
 
 /**
@@ -37,6 +39,15 @@ typedef struct {
  * \return A pointer to a Shape. Should later be deallocated with free_shape.
  */
 Shape *tc_new_shape(int length, int_shape_t *shape_arr);
+
+/**
+* \brief Deep-copy a Shape.
+*
+* \param shape Shape.
+*
+* \return Shape.
+*/
+Shape *tc_copy_shape(Shape *shape);
 
 /**
  * \brief Deallocates a Shape.
@@ -53,6 +64,17 @@ void tc_free_shape(Shape *ptr);
  * input shape.
  */
 int_shape_t tc_shape_size(Shape *shape);
+
+/**
+* \brief Compare two shapes to see if they're equal.
+*
+* \param s1 Shape.
+* \param s2 Shape.
+*
+* \return true (1) if they are the same, false (0) if not.
+*/
+bool tc_shape_equal(Shape *s1, Shape *s2);
+
 /**
  * \brief Type for a float tensor.
  *
@@ -79,6 +101,15 @@ typedef struct {
  * \return Pointer to a Tensor. Should be deallocated with free_tensor.
  */
 Tensor *tc_new_tensor(Shape *shape, float *value_array);
+
+/**
+* \brief Deep-copy a Tensor.
+*
+* \param t Tensor.
+*
+* \return Tensor.
+*/
+Tensor *tc_copy_tensor(Tensor *t);
 
 /**
 * \brief Get a Tensor representing a shape.
