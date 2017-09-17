@@ -12,7 +12,7 @@
 #include "tensor.h"
 
 /**
-* \file include/math.h
+* \file include/tcmath.h
 * \author Ian G. Tayler
 *
 * \brief Defines mathematical functions for Tensors.
@@ -165,5 +165,43 @@ void tc_div_and_free(Tensor *tdest, Tensor *t2);
 * \see tc_div_and_free tc_div
 */
 Tensor *tc_div_pure(Tensor *t1, Tensor *t2);
+
+/**
+* \brief Sum every member of a Tensor.
+*
+* \param t Tensor.
+*
+* \return Float with the sum of every member of the Tensor.
+*/
+float tc_reduce_sum(Tensor *t);
+
+/**
+* \brief Multiply every member of a Tensor.
+*
+* \param t Tensor.
+*
+* \return Float with the product of every member of the Tensor.
+*/
+float tc_reduce_mul(Tensor *t);
+
+/**
+* \brief Reduce a Tensor to a float with a certain function.
+*
+* \param t Tensor.
+* \param fn Function that takes two floats and returns a float.
+* \param init Initial accumulator value.
+*/
+float tc_reduce_fn(Tensor *t, float (*fn)(float, float), float init);
+
+/*
+* \brief Compute a linear combination of two Tensors.
+*
+* \param t1 Tensor.
+* \param t2 Tensor.
+*
+* \return Float. The result is reduce_sum(multiply_elementwise(t1, t2)).
+*/
+float tc_linear_comb(Tensor *t1, Tensor *t2);
+
 
 #endif
