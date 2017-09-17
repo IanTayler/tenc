@@ -4,7 +4,7 @@
  *                                                                           *
  * TenC  is  distributed  as  free  software under the Artistic License 2.0. *
  * You  should  have received a copy of the license together with the source *
- * files  for Markovman. It should be in the main directory, in a file named *
+ * files  for  TenC.  It  should  be  in the main directory, in a file named *
  * 'LICENSE'.                                                                *
  *****************************************************************************/
 #ifndef TENSOR_H
