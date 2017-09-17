@@ -48,6 +48,49 @@ typedef struct {
 Shape *tc_new_shape(int length, int_shape_t *shape_arr);
 
 /**
+* \brief Create a Shape for a vector-like Tensor.
+*
+* \param len Number of elements.
+*
+* \return Shape.
+*/
+Shape *tc_vector_shape(int_shape_t len);
+
+/**
+* \brief Create a Shape for a matrix-like Tensor.
+*
+* \param dim0 Size of the first dimension.
+* \param dim1 Size of the second dimension.
+*
+* \return Shape.
+*/
+Shape *tc_matrix_shape(int_shape_t dim0, int_shape_t dim1);
+
+/**
+* \brief Create a Shape for a 3D Tensor.
+*
+* \param dim0 Size of the first dimension.
+* \param dim1 Size of the second dimension.
+* \param dim2 Size of the third dimension.
+*
+* \return Shape.
+*/
+Shape *tc_3d_shape(int_shape_t dim0, int_shape_t dim1, int_shape_t dim2);
+
+/**
+* \brief Create a Shape for a 4D Tensor.
+*
+* \param dim0 Size of the first dimension.
+* \param dim1 Size of the second dimension.
+* \param dim2 Size of the third dimension.
+* \param dim3 Size of the fourth dimension.
+*
+* \return Shape.
+*/
+Shape *tc_4d_shape(int_shape_t dim0, int_shape_t dim1,
+                   int_shape_t dim2, int_shape_t dim3);
+
+/**
 * \brief Deep-copy a Shape.
 *
 * \param shape Shape.

@@ -34,6 +34,41 @@ Shape *tc_new_shape(int length, int_shape_t *shape_arr)
     return ptr;
 }
 
+Shape *tc_vector_shape(int_shape_t len)
+{
+    int_shape_t *shape_arr = malloc(sizeof(*shape_arr));
+    shape_arr[0] = len;
+    return tc_new_shape(1, shape_arr);
+}
+
+Shape *tc_matrix_shape(int_shape_t dim0, int_shape_t dim1)
+{
+    int_shape_t *shape_arr = malloc(sizeof(*shape_arr) * 2);
+    shape_arr[0] = dim0;
+    shape_arr[1] = dim1;
+    return tc_new_shape(2, shape_arr);
+}
+
+Shape *tc_3d_shape(int_shape_t dim0, int_shape_t dim1, int_shape_t dim2)
+{
+    int_shape_t *shape_arr = malloc(sizeof(*shape_arr) * 3);
+    shape_arr[0] = dim0;
+    shape_arr[1] = dim1;
+    shape_arr[2] = dim2;
+    return tc_new_shape(3, shape_arr);
+}
+
+Shape *tc_4d_shape(int_shape_t dim0, int_shape_t dim1,
+                   int_shape_t dim2, int_shape_t dim3)
+{
+    int_shape_t *shape_arr = malloc(sizeof(*shape_arr) * 4);
+    shape_arr[0] = dim0;
+    shape_arr[1] = dim1;
+    shape_arr[2] = dim2;
+    shape_arr[3] = dim3;
+    return tc_new_shape(4, shape_arr);
+}
+
 Shape *tc_copy_shape(Shape *shape)
 {
     int_shape_t *copy_arr = malloc(sizeof(*copy_arr) * shape->len);
