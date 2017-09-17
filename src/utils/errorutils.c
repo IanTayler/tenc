@@ -7,20 +7,19 @@
  * files  for Markovman. It should be in the main directory, in a file named *
  * 'LICENSE'.                                                                *
  *****************************************************************************/
-#ifndef COMMONS_H
-#define COMMONS_H
 
-#include <stdbool.h>
-/**
-* \file include/commons.h
-* \author Ian G. Tayler
-* \brief Defines very basic macros and constants to be used throughout TenC.
-*/
-/**
-* \brief Checks for integrity before performing operations.
-*
-* Setting SAFE_MODE to false (i.e. 0) will make your program much harder to
-* debug but it will also make it faster, perhaps substantially so.
-*/
-#define SAFE_MODE true
-#endif
+#include <stdio.h>
+
+#include "errorutils.h"
+#include "tensor.h"
+#include "pprint.h"
+
+void alert_unequal_shapes(Tensor *t1, Tensor *t2, char *fn_name)
+{
+    if (!tc_shape_equal(t1->shape, t2->shape)) {
+        /* Shapes aren't the same */
+        fprintf(stderr, "Unequal shapes in %s.\n", fn_name);
+        fprintf(stderr, "Shape 1: %s\n", tc_btfy_shape(t1->shape));
+        fprintf(stderr, "Shape 2: %s\n", tc_btfy_shape(t2->shape));
+    }
+}

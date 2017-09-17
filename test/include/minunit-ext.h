@@ -6,7 +6,7 @@
  *********************************************************/
 #ifndef EXP_MINUINT_EXT_H
 #define EXP_MINUINT_EXT_H
-/** \file: test/minunit-ext.h
+/** \file: test/include/minunit-ext.h
  * \author Jera Design and Ian G. Tayler
  *
  * \brief A very minimal unit test library.
