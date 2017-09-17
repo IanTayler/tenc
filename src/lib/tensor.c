@@ -10,10 +10,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 #include <omp.h>
 
 #include "tensor.h"
+
+void tc_initialize()
+{
+    srand48(time(NULL));
+    /* Modify the seed */
+    srand((time(NULL) >> 1) * 13);
+}
 
 /***********************************************
 *                     SHAPE                    *
@@ -145,4 +153,15 @@ Tensor *tc_ones(Shape *shape)
 Tensor *tc_ones_like(Tensor *t)
 {
     return tc_ones(t->shape);
+}
+
+Tensor *tc_generate(Shape *shape, float (*fn)(void))
+{
+    /* We don't parallelize to avoid problems with seeds when using random
+    functions as generators */
+    int_shape_t size = tc_shape_size(shape);
+    float *value_arr = malloc(sizeof(*value_arr) * size);
+    for (int i = 0; i < size; i++)
+        value_arr[i] = fn();
+    return tc_new_tensor(shape, value_arr);
 }
