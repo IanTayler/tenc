@@ -35,14 +35,6 @@ char *tc_btfy(Tensor *t);
 */
 char *tc_btfy_shape(Shape *shape);
 /**
-* \brief Gets a long string representation of a Tensor.
-*
-* \param t Tensor.
-*
-* \return Dynamically allocated string.
-*/
-char *tc_long_btfy(Tensor *t);
-/**
 * \brief Pretty printer for Tensors.
 *
 * \param t Tensor to be printed.
@@ -54,11 +46,4 @@ void tc_pprint(Tensor *t);
 * \param shape Shape to be printed.
 */
 void tc_pprint_shape(Shape *shape);
-
-/**
-* \brief Multi-line pretty printer for Tensors.
-*
-* \param t Tensor to be printed.
-*/
-void tc_long_pprint(Tensor *t);
 #endif
