@@ -18,6 +18,13 @@
 *
 * \brief Defines Tensor type and basic handlers and initializers.
 */
+
+/**
+* \brief Initialization procedure for TenC.
+*
+* Sets random seeds, etc.
+*/
+void tc_initialize();
 /**
  * \brief Integer type for dimension sizes in shapes.
  */
@@ -195,5 +202,21 @@ Tensor *tc_ones(Shape *shape);
  * \see tc_fill tc_zeros tc_zeros_like tc_ones
  */
 Tensor *tc_ones_like(Tensor *t);
+
+/**
+* \brief Create a Tensor with values drawn from a generator function.
+*
+* \param shape Shape.
+* \param fn Function with no arguments returning a float.
+*
+* \note Generating a Tensor using this fucntion will be substantially slower
+* than using tc_fill and similar functions. The main reason being that we don't
+* parallelize this function to avoid problems with repeated results when using
+* a random generator function (probably the most common use case for this
+* function).
+*
+* \return Pointer to a Tensor.
+*/
+Tensor *tc_generate(Shape *shape, float (*fn)(void));
 
 #endif
