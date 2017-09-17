@@ -194,14 +194,14 @@ float tc_reduce_mul(Tensor *t);
 float tc_reduce_fn(Tensor *t, float (*fn)(float, float), float init);
 
 /*
-* \brief Compute a linear combination of two Tensors.
+* \brief Compute the dot product of two Tensors.
 *
 * \param t1 Tensor.
 * \param t2 Tensor.
 *
 * \return Float. The result is reduce_sum(multiply_elementwise(t1, t2)).
 */
-float tc_linear_comb(Tensor *t1, Tensor *t2);
+float tc_dot_product(Tensor *t1, Tensor *t2);
 
 
 #endif

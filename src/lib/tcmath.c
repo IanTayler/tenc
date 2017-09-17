@@ -170,7 +170,7 @@ float tc_reduce_mul(Tensor *t)
     return tc_reduce_fn(t, &mul, 1.f);
 }
 
-float tc_linear_comb(Tensor *t1, Tensor *t2)
+float tc_dot_product(Tensor *t1, Tensor *t2)
 {
     int_shape_t shape_size = tc_shape_size(t1->shape);
 #if SAFE_MODE
