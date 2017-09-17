@@ -8,6 +8,8 @@
  * 'LICENSE'.                                                                *
  *****************************************************************************/
 
+#include <stdlib.h>
+
 #include "tensor.h"
 #include "tcmath.h"
 #include "nn.h"
