@@ -1,7 +1,7 @@
 ifndef $(CC)
 	CC=gcc
 endif
-CFLAGS=-O3 -Wall -pedantic -g -fopenmp -std=gnu99
+CFLAGS=-O3 -Wall -pedantic -g -fopenmp -std=gnu99 -march=native
 LIBCFLAGS=$(CFLAGS) -shared -fPIC
 PROGRAM=tenc
 LIBRARY=libtenc.so
