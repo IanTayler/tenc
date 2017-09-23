@@ -2,6 +2,7 @@ ifndef $(CC)
 	CC=gcc
 endif
 CFLAGS=-O3 -Wall -pedantic -g -fopenmp -std=gnu99 -march=native
+LDFLAGS=-lm
 LIBCFLAGS=$(CFLAGS) -shared -fPIC
 PROGRAM=tenc
 LIBRARY=libtenc.so
@@ -27,7 +28,8 @@ servedoc: doc
 	cd doc/html; python3 -m http.server 8000
 
 $(PROGRAM): $(SOURCES) $(INCLUDES) Makefile
-	$(CC) $(CFLAGS) $(SOURCES) -o $(PROGRAM) -I$(INCLUDE) -I$(UTILSINCLUDE)
+	$(CC) $(CFLAGS) $(SOURCES) -o $(PROGRAM) -I$(INCLUDE) -I$(UTILSINCLUDE) \
+		$(LDFLAGS)
 	@echo "Finished making $(PROGRAM)"
 
 $(LIBRARY): $(SOURCES) $(INCLUDES) Makefile
@@ -45,8 +47,8 @@ TESTSOURCES=test/*.c
 TESTINCLUDE=test/include/
 TESTINCLUDES=test/include/*.h
 tests: $(TESTSOURCES) $(LIBSOURCES) $(INCLUDES) $(TESTINCLUDES) Makefile
-	$(CC) $(CFLAGS) $(LIBSOURCES) $(UTILSSOURCES) $(TESTSOURCES) -o tests -I$(TESTINCLUDE) \
-	-I$(INCLUDE) -I$(UTILSINCLUDE)
+	$(CC) $(CFLAGS) $(LIBSOURCES) $(UTILSSOURCES) $(TESTSOURCES) -o tests \
+		-I$(TESTINCLUDE) -I$(INCLUDE) -I$(UTILSINCLUDE) $(LDFLAGS)
 	./tests
 
 test: tests
