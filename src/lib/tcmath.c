@@ -182,3 +182,24 @@ float tc_dot_product(Tensor *t1, Tensor *t2)
     }
     return out;
 }
+
+/*************************
+      NON-LINEARITIES    *
+**************************/
+float tc_relu(float x)
+{
+    if (x <= 0.f) {
+        return 0.f;
+    }
+    return x;
+}
+
+float tc_relu6(float x)
+{
+    if (x <= 0.f) {
+        return 0.f;
+    } else if (x >= 6.f) {
+        return 6.f;
+    }
+    return x;
+}

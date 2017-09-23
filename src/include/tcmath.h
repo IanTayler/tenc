@@ -203,5 +203,28 @@ float tc_reduce_fn(Tensor *t, float (*fn)(float, float), float init);
 */
 float tc_dot_product(Tensor *t1, Tensor *t2);
 
+/**
+* \brief Rectified Linear function.
+*
+* \note This is only the rectified linear function. It's called 'ReLU' to make
+* it more recognizable.
+*
+* \param x Input float.
+*
+* \return Float. 0 if x <= 0, x otherwise.
+*/
+float tc_relu(float x);
+
+/**
+* \brief Rectified Linear function up to 6.
+*
+* \note This is only the rectified linear function. It's called 'ReLU' to make
+* it more recognizable.
+*
+* \param x Input float.
+*
+* \return Float. 0 if x <= 0, x if x >= 6, x otherwise.
+*/
+float tc_relu6(float x);
 
 #endif
