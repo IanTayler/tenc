@@ -10,20 +10,25 @@
 
 #include <stdlib.h>
 
+#include <omp.h>
+
 #include "tensor.h"
 #include "tcmath.h"
 #include "nn.h"
-
-float tcnn_activate_neuron(Neuron *n, Tensor *inp)
-{
-    float retv = tc_linear_comb(inp, n->w);
-    retv += n->b;
-    retv = n->actvf(retv);
-    return retv;
-}
 
 void tcnn_free_neuron(Neuron *n)
 {
     tc_free_tensor(n->w);
     free(n);
+}
+
+void tcnn_free_layer(Layer *l)
+{
+#pragma omp parallel for
+    for (int i = 0; i < l->size; i++) {
+        tcnn_free_neuron(l->neurons[i]);
+    }
+    tc_free_tensor(l->out);
+    tc_free_shape(l->input_shape);
+    free(l);
 }

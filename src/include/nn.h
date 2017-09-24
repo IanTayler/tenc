@@ -24,25 +24,7 @@
 typedef struct {
     Tensor *w; /**< Weights */
     float b; /**< Bias */
-    float out; /**< Output */
-    float (*actvf)(float); /**< Activation function */
-    /**
-    * Function used in backpropagation.
-    * \param out Will be passed Neuron->out.
-    * \param w Will be passed Neuron->w.
-    */
-    float (*bpf)(float, float);
 } Neuron;
-
-/**
-* \brief Activates a neuron.
-*
-* \param n Neuron.
-* \param inp Input Tensor.
-*
-* \return Float that's also saved in n->out.
-*/
-float tcnn_activate_neuron(Neuron *n, Tensor *inp);
 
 /**
 * \brief Free a Neuron and all its members.
@@ -50,5 +32,84 @@ float tcnn_activate_neuron(Neuron *n, Tensor *inp);
 * \param n Neuron.
 */
 void tcnn_free_neuron(Neuron *n);
+
+/**
+* \brief Type for Layers.
+*/
+typedef struct {
+    Shape *input_shape; /**< Input shape */
+    int_shape_t size; /**< Number of Neurons */
+    Neuron **neurons; /**< Array of Neurons */
+    Tensor *out; /**< Tensor with the outputs for each Neuron */
+    float (*actvf)(float); /**< Activation function */
+    /**
+    * Function used in backpropagation.
+    *
+    * Should be the differentiation of the activation function.
+    */
+    float (*bpf)(float);
+} Layer;
+
+/**
+* \brief Deallocate a Layer.
+*
+* \param l Layer.
+*/
+void tcnn_free_layer(Layer *l);
+
+/**
+* \brief Create a network Layer with a ReLU function as nonlinearity.
+*
+* \param in_shape Input Shape.
+* \param out_shape Output Shape. Determines the amount of Neurons.
+*
+* \return Layer.
+*/
+Layer *tcnn_relu_layer(Shape *in_shape, Shape *out_shape);
+
+/**
+* \brief Create a network Layer with a ReLU6 function as nonlinearity.
+*
+* \param in_shape Input Shape.
+* \param out_shape Output Shape. Determines the amount of Neurons.
+*
+* \return Layer.
+*/
+Layer *tcnn_relu6_layer(Shape *in_shape, Shape *out_shape);
+
+/**
+* \brief Create a network Layer with tanh as nonlinearity.
+*
+* \param in_shape Input Shape.
+* \param out_shape Output Shape. Determines the amount of Neurons.
+*
+* \return Layer.
+*/
+Layer *tcnn_tanh_layer(Shape *in_shape, Shape *out_shape);
+
+/**
+* \brief Create a network Layer with a sigmoid function as nonlinearity.
+*
+* \param in_shape Input Shape.
+* \param out_shape Output Shape. Determines the amount of Neurons.
+*
+* \return Layer.
+*/
+Layer *tcnn_sigmoid_layer(Shape *in_shape, Shape *out_shape);
+
+/**
+* \brief Create a Layer with custom activation function and weight initializer.
+*
+* \param in_shape Input Shape.
+* \param out_shape Output Shape.
+* \param actvf Pointer to activation function.
+* \param bpf Pointer to backpropagation function. (Differentiation of actvf.)
+* \param init Pointer to initialization function for weight Tensors.
+*
+* \return Layer.
+*/
+Layer *tcnn_custom_layer(Shape *in_shape, Shape *out_shape,
+                         float (*actvf)(float), float (*bpf)(float),
+                         float (*init)(void));
 
 #endif
