@@ -239,7 +239,7 @@ float tc_relu6(float x);
 *
 * \note Returns 1 for value 0 and 0 for value 6.
 */
-float tc_relu6_backprop(float x);
+float tc_relu6_diff(float x);
 
 /**
 * \brief Thin wrapper around tanhf in math.h
