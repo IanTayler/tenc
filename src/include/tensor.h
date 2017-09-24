@@ -171,6 +171,16 @@ Tensor *tc_copy_tensor(Tensor *t);
 Tensor *tc_shape_to_tensor(Shape *shape);
 
 /**
+* \brief Frees a Tensor without freeing its Shape.
+*
+* For Tensors with shared Shape, like weights of Neurons in a Layer, or
+* Tensors resulting from zeros_like, ones_like, etc.
+*
+* \brief ptr Pointer to a Tensor.
+*/
+void tc_free_tensor_w_shared_shape(Tensor *ptr)
+
+/**
  * \brief Deallocates a Tensor.
  *
  * \param ptr Pointer to a Tensor.

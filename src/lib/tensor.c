@@ -147,11 +147,16 @@ Tensor *tc_shape_to_tensor(Shape *shape)
     return ptr;
 }
 
+void tc_free_tensor_w_shared_shape(Tensor *ptr)
+{
+    free(ptr->value_array);
+    free(ptr);
+}
+
 void tc_free_tensor(Tensor *ptr)
 {
     tc_free_shape(ptr->shape);
-    free(ptr->value_array);
-    free(ptr);
+    tc_free_tensor_w_shared_shape(ptr);
 }
 
 /* INITIALIZERS */
