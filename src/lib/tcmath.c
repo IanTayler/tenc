@@ -242,3 +242,51 @@ float tc_sigmoid_diff(float x)
     float sigmoid_out = tc_sigmoid(x);
     return sigmoid_out * (1 - sigmoid_out);;
 }
+
+/*************************
+      COMPARISONS AND    *
+      BOOLEAN TENSORS    *
+**************************/
+
+bool tc_near_equal_floats(float a, float b, int places)
+{
+    return fabsf(a - b) < powf(0.1f, (float)places);
+}
+
+void tc_near_equal(Tensor *t1, Tensor *t2, int places)
+{
+#if SAFE_MODE
+    if (tc_shape_equal(t1->shape, t2->shape)) {
+        alert_unequal_shapes(t1, t2, "tc_near_equal");
+    }
+#endif /* SAFE_MODE */
+    int_shape_t size = tc_shape_size(t1->shape);
+#pragma omp parallel for
+    for (int i = 0; i < size; i++) {
+        t1->value_array[i] = tc_near_equal_floats(
+            t1->value_array[i], t2->value_array[i], places
+        ) ? 1.f : 0.f;
+    }
+}
+
+bool tc_all_near(Tensor *t, float value, int places)
+{
+    int_shape_t size = tc_shape_size(t->shape);
+    for (int i = 0; i < size; i++) {
+        if (!tc_near_equal_floats(t->value_array[i], value, places)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool tc_reduce_all(Tensor *t, int places)
+{
+    int_shape_t size = tc_shape_size(t->shape);
+    for (int i = 0; i < size; i++) {
+        if (tc_near_equal_floats(t->value_array[i], 0.f, places)) {
+            return false;
+        }
+    }
+    return true;
+}
