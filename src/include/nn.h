@@ -106,6 +106,8 @@ Layer *tcnn_sigmoid_layer(Shape *in_shape, Shape *out_shape);
 * \param bpf Pointer to backpropagation function. (Differentiation of actvf.)
 * \param init Pointer to initialization function for weight Tensors.
 *
+* \return You should later free this Layer with tcnn_free_layer.
+*
 * \return Layer.
 */
 Layer *tcnn_custom_layer(Shape *in_shape, Shape *out_shape,
