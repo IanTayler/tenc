@@ -8,6 +8,7 @@
  * 'LICENSE'.                                                                *
  *****************************************************************************/
 #include <stdio.h>
+#include <math.h>
 
 #include <omp.h>
 
@@ -194,6 +195,14 @@ float tc_relu(float x)
     return x;
 }
 
+float tc_relu_diff(float x)
+{
+    if (x < 0.f) {
+        return 0.f;
+    }
+    return 1.f;
+}
+
 float tc_relu6(float x)
 {
     if (x <= 0.f) {
@@ -202,4 +211,34 @@ float tc_relu6(float x)
         return 6.f;
     }
     return x;
+}
+
+float tc_relu6_diff(float x)
+{
+    if (x < 0.f || x >= 6.f) {
+        return 0.f;
+    }
+    return 1.f;
+}
+
+float tc_tanh(float x)
+{
+    return tanhf(x);
+}
+
+float tc_tanh_diff(float x)
+{
+    float tanh_out = tc_tanh(x);
+    return 1.f - tanh_out * tanh_out;
+}
+
+float tc_sigmoid(float x)
+{
+    return 1.f / (1.f - expf(-x));
+}
+
+float tc_sigmoid_diff(float x)
+{
+    float sigmoid_out = tc_sigmoid(x);
+    return sigmoid_out * (1 - sigmoid_out);;
 }
