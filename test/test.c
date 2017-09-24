@@ -29,6 +29,7 @@ char *all_tests()
 {
     mu_run_test(mu_fine_test);
     mu_run_test(shape_new_and_free);
+    mu_run_test(tensor_new_and_free);
 
     return 0;
 }

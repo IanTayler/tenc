@@ -43,5 +43,12 @@ char *shape_new_and_free()
 char *tensor_new_and_free()
 {
     test_running = "tensor_new_and_free";
+    Shape *s = tc_matrix_shape(4, 5);
+    int_shape_t size = tc_shape_size(s);
+    float *arr = calloc(size, sizeof(*arr));
+    Tensor *t = tc_new_tensor(s, arr);
+    tc_free_tensor(t);
+    /* We got here without throwing an error, so we pass this test.
+    TODO: think of possible assertions. */
     return 0;
 }
