@@ -34,6 +34,7 @@ char *all_tests()
     mu_run_test(zeros_works);
     mu_run_test(ones_works);
     mu_run_test(fill_works);
+    mu_run_test(tensor_copy_works);
 
     return 0;
 }

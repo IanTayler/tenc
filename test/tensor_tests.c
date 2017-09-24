@@ -70,8 +70,10 @@ char *zeros_works()
             tc_free_tensor(t);
         }
     );
+    tc_free_tensor(t);
     return 0;
 }
+
 char *ones_works()
 {
     test_running = "ones_works";
@@ -84,8 +86,10 @@ char *ones_works()
             tc_free_tensor(t);
         }
     );
+    tc_free_tensor(t);
     return 0;
 }
+
 char *fill_works()
 {
     test_running = "fill_works";
@@ -99,5 +103,35 @@ char *fill_works()
             tc_free_tensor(t);
         }
     );
+    tc_free_tensor(t);
+    return 0;
+}
+
+char *tensor_copy_works()
+{
+    test_running = "tensor_copy_works";
+    Tensor *t = tc_fill(tc_vector_shape(780), random_float());
+    Tensor *copy = tc_copy_tensor(t);
+    tc_near_equal(t, copy, DEFAULT_PLACES); /* saves result to t */
+    bool check = tc_reduce_all(t, DEFAULT_PLACES);
+    bool check2 = tc_all_near(t, 1.f, DEFAULT_PLACES);
+    mu_assert_running(
+        "Equality between Tensor and copy doesn't reduce_all to true.",
+        check,
+        {
+            tc_free_tensor(t);
+            tc_free_tensor(copy);
+        }
+    );
+    mu_assert_running(
+        "Equality between Tensor and copy doesn't yield all near ones.",
+        check2,
+        {
+            tc_free_tensor(t);
+            tc_free_tensor(copy);
+        }
+    );
+    tc_free_tensor(t);
+    tc_free_tensor(copy);
     return 0;
 }
