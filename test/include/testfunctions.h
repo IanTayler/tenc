@@ -4,4 +4,8 @@
 char *shape_new_and_free();
 
 char *tensor_new_and_free();
+
+char *zeros_works();
+char *ones_works();
+char *fill_works();
 #endif
