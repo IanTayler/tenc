@@ -16,6 +16,14 @@
 * \author Ian G. Tayler
 */
 
-float random_float(float min, float max);
+/**
+* \brief Random float between two floats.
+*/
+float random_float_range(float min, float max);
+
+/**
+* \brief Random float between 0 and 1.
+*/
+float random_float();
 
 #endif

@@ -9,8 +9,13 @@
  *****************************************************************************/
 #include <stdlib.h>
 
-float random_float(float min, float max)
+float random_float_range(float min, float max)
 {
     double out = (drand48() * ((double)max - (double)min)) + (double)min;
     return (float)out;
+}
+
+float random_float()
+{
+    return (float)drand48();
 }
