@@ -216,6 +216,13 @@ float tc_dot_product(Tensor *t1, Tensor *t2);
 float tc_relu(float x);
 
 /**
+* \brief Differentiation of tc_relu.
+*
+* \note Returns 1 for value 0.
+*/
+float tc_relu_diff(float x);
+
+/**
 * \brief Rectified Linear function up to 6.
 *
 * \note This is only the rectified linear function. It's called 'ReLU' to make
@@ -227,4 +234,29 @@ float tc_relu(float x);
 */
 float tc_relu6(float x);
 
+/**
+* \brief Differentiation of tc_relu6.
+*
+* \note Returns 1 for value 0 and 0 for value 6.
+*/
+float tc_relu6_backprop(float x);
+
+/**
+* \brief Thin wrapper around tanhf in math.h
+*/
+float tc_tanh(float x);
+
+/**
+* \brief Differentiation of tanh.
+*/
+float tc_tanh_diff(float x);
+
+/**
+* \brief Logistic function.
+*/
+float tc_sigmoid(float x);
+/**
+* \brief Differentiation of the sigmoid function.
+*/
+float tc_sigmoid_diff(float x);
 #endif
