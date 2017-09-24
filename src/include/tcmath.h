@@ -9,6 +9,10 @@
  *****************************************************************************/
 #ifndef MATH_H
 #define MATH_H
+
+#include <stdbool.h>
+#include <math.h>
+
 #include "tensor.h"
 
 /**
@@ -259,4 +263,52 @@ float tc_sigmoid(float x);
 * \brief Differentiation of the sigmoid function.
 */
 float tc_sigmoid_diff(float x);
+
+/**
+* \brief Compare two floats.
+*
+* \param a First float to compare.
+* \param b Second float to compare.
+* \param places Amount of decimal places to consider.
+*
+* \return true if they're equal up to places decimal places, false otherwise.
+*/
+bool tc_near_equal_floats(float a, float b, int places);
+
+/**
+* \brief Compare two Tensors.
+*
+* Change the first Tensor so that in each place it will be 1.f if the two
+* Tensors were equal in that place, and 0.f if they weren't.
+*
+* \param t1 First Tensor to compare.
+* \param t2 Second Tensor to compare.
+* \param places Amount of decimal places to consider.
+*
+* \note This will modify the first Tensor.
+*/
+void tc_near_equal(Tensor *t1, Tensor *t2, int places);
+
+/**
+* \brief Compare all elements in a Tensor to a certain float.
+*
+* \param t Tensor.
+* \param value Float.
+* \param places Decimal places to consider.
+*
+* \return true if they are all near, false otherwise.
+*/
+bool tc_all_near(Tensor *t, float value, int places);
+
+/**
+* \brief Reduce a boolean Tensor to a boolean value.
+*
+* \param t Tensor to reduce.
+* \param places Number of places to consider.
+*
+* \note This function doesn't check its input is actually a boolean Tensor. All
+* values that aren't tc_near_equal_floats to 0.f considering places number of
+* places will taken as true.
+*/
+bool tc_reduce_all(Tensor *t, int places);
 #endif
