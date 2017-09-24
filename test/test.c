@@ -28,8 +28,12 @@ char *mu_fine_test()
 char *all_tests()
 {
     mu_run_test(mu_fine_test);
+
     mu_run_test(shape_new_and_free);
     mu_run_test(tensor_new_and_free);
+    mu_run_test(zeros_works);
+    mu_run_test(ones_works);
+    mu_run_test(fill_works);
 
     return 0;
 }
