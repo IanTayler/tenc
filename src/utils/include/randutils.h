@@ -8,7 +8,7 @@
  * 'LICENSE'.                                                                *
  *****************************************************************************/
 #ifndef RANDUTILS_H
-#define RANDUTILS
+#define RANDUTILS_H
 
 /**
 * \file src/utils/include/randutils.h
