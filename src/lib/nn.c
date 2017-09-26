@@ -52,7 +52,7 @@ Layer *tcnn_custom_layer(Shape *in_shape, Shape *out_shape,
     Layer *l = malloc(sizeof(*l));
     l->input_shape = in_shape;
     l->size = tc_shape_size(out_shape);
-    l->neurons = malloc(sizeof(Neuron) * l->size);
+    l->neurons = malloc(sizeof(*(l->neurons)) * l->size);
     /* We don't want to parallelize this because we're probably using a random
     * init and parallelizing it could result in repeated pseudo-random numbers
     * across neurons. */
