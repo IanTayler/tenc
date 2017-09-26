@@ -113,5 +113,14 @@ Layer *tcnn_sigmoid_layer(Shape *in_shape, Shape *out_shape);
 Layer *tcnn_custom_layer(Shape *in_shape, Shape *out_shape,
                          float (*actvf)(float), float (*bpf)(float),
                          float (*init)(void));
+/**
+* \brief Type for networks.
+*/
+typedef struct _network {
+    int pos; /**< Current position in the Layer array */
+    int size; /**< Number of Layer-s */
+    Layer **layers; /**< Array of Layer-s */
+    float (*loss)(struct _network *n); /**< Loss function */
+} Network;
 
 #endif
